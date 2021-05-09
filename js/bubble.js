@@ -1,30 +1,27 @@
-const container = document.querySelector(".data-container");
+async function bubbleSort(barsArray) {
+    // n -> total number of bars 
+    let n = barsArray.length;
 
-document.getElementById('newArray').addEventListener('click', generateBlocks)
+    for (let i = n-1; i >= 0; i--) {
+        for (let j = 0; j < i; j++) {
 
+            // change color of the bar being process to blue  
+            barsArray[j].style.background = "#0072ff";
+            barsArray[j+1].style.background = "#0072ff";
+            await new Promise(resolve => setTimeout(resolve, delay));
 
-function generateBlocks() {
-  for (let i = 0; i <= 62; i++) {
-    const value = Math.floor(Math.random() * 100);
+            if (parseInt(barsArray[j].style.height) > parseInt(barsArray[j+1].style.height)) {
+                await swap(barsArray[j], barsArray[j+1]);
+            }
 
-    const block = document.createElement("div");
-    block.classList.add("block");
-    block.style.height = `${value * 6}px`;
-    block.style.transform = `translateX(${i * 22}px)`;
+            // change color back to normal
+            barsArray[j].style.background = "#ffd000";
+            barsArray[j+1].style.background = "#ffd000";
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
 
-    const blockLabel = document.createElement("label");
-    blockLabel.classList.add("blockId");
-    blockLabel.innerHTML = value;
-
-    block.appendChild(blockLabel);
-    container.appendChild(block);
-  }
+        // ith bar is sorted, change its color to green
+        barsArray[i].style.background = "#15fa00";
+        await new Promise(resolve => setTimeout(resolve, delay));
+    }
 }
-generateBlocks();
-
-
-
-
-
-
-
